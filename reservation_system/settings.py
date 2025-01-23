@@ -122,5 +122,5 @@ EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", default="password")
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/verification/'
 
-ALLOWED_HOSTS = ['bibliobox.onrender.com','127.0.0.1','localhost', ]
+ALLOWED_HOSTS = ['biblioboxes.onrender.com','127.0.0.1','localhost', ]
 
