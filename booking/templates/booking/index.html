@@ -1,0 +1,172 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - Box Silencieux</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style_accueil.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'images/LogoSVGNanterre.png' %}">
+</head>
+<body>
+    <!-- Barre supérieure -->
+    <div class="top-bar">
+        <div>
+            <span>📍 2 All. de l'Université, 92000 Nanterre</span>
+            <span>✉️ bu@liste.parisnanterre.fr</span>
+            <span>📞 01 40 97 72 02</span>
+        </div>
+    </div>
+
+    <!-- Header principal -->
+    <header>
+        <div class="header-left">
+            <img src="{% static 'images/Logo_Université_Paris-Nanterre.svg' %}" alt="Logo Université Paris Nanterre">
+            <div class="header-titles">
+                <span class="vertical-bar"></span>
+                <span class="header-subtitle">Bibliothèques universitaires</span>
+            </div>
+        </div>
+        <div class="nav-right">
+            <nav class="nav-links">
+                <a href="#connexion">Réservations</a>
+                <a href="#connexion">Historique</a>
+                <a href="https://www.parisnanterre.fr/" target="_blank">www.parisnanterre.fr</a>
+                <a href="https://portail.parisnanterre.fr/" target="_blank">ENT</a>
+                <a href="https://bu.parisnanterre.fr/nous-contacter" target="_blank">Contactez-nous</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Section Hero -->
+    <section class="hero">
+        <img src="{% static 'images/perspective_crcn_accueil00-1.jpg' %}" alt="Espace intérieur">
+        <div class="hero-overlay"></div>
+        <div class="hero-text">
+            <h1>Réservez votre box d'appel en toute simplicité !</h1>
+        </div>
+    </section>
+
+   <!-- Section pédagogie avec image -->
+ <!-- Texte pédagogique avec image -->
+ <section class="info-section">
+    <div class="info-text">
+        <h2>Qu'est-ce qu'un box silencieux ?</h2>
+        <p>
+            📞 <strong>Les boxes silencieux</strong> sont là pour vous ! Besoin de passer un appel en toute tranquillité sans quitter la bibliothèque ? Ces espaces vous permettent de discuter confortablement, sans déranger ni être dérangé. 
+        </p>
+        <p>
+            🛠️ <strong>Comment ça marche ?</strong>  
+        </p>
+        <ul>
+            <p>🗓️ <strong>2 réservations par semaine</strong> maximum pour mieux gérer les disponibilités.</p>
+            <p>⏳ <strong>24 heures d'attente</strong> avant de pouvoir réserver pour la semaine suivante.</p>
+            <p>❌ <strong>Annulation facile</strong> si vous changez d’avis.</p>
+            <p>📩 <strong>Connexion simplifiée</strong> : recevez un code par mail, et c’est parti !</p>
+        </ul>
+        <p>
+            Avec les boxes silencieux, appelez en toute sérénité, restez productif et à l’aise, sans quitter la bibliothèque ! 👍
+        </p>
+    </div>
+    <div class="info-image">
+        <img src="{% static 'images/pixel_box.jpg' %}" alt="Box Silencieux">
+    </div>
+</section>
+
+    <!-- Formulaire de connexion -->
+    <section id="connexion" class="form-section">
+        <h2>🔐 Connectez-vous pour réserver un box</h2>
+        <div class="form-container">
+            <div class="emoji">✉️</div>
+            <h2>Connexion à votre compte</h2>
+            <p>Entrez votre adresse universitaire pour accéder à vos réservations. Vous recevrez un code dans votre boîte mail pour valider l'accès. 😊</p>
+            <form method="POST" action="{% url 'index' %}" id="email-form" onsubmit="localStorage.setItem('email', document.getElementById('email').value);">
+                {% csrf_token %}
+                <input type="email" id="email" name="email" placeholder="Entrez votre adresse universitaire" required>
+                <button type="submit" id="submit-btn">Obtenir mon code</button>
+            </form>
+        </div>
+    </section>
+
+  <!-- Section Blog -->
+<!-- Section Blog -->
+<section class="blog-section">
+  <h2 class="blog-title1">Blog - Thèse du Mois ! 📰</h2>
+  <p class="blog-subtitle">Tous les mois, la BU met en avant une thèse en Open Access – diffusée sous forme numérique et gratuitement – , ainsi que des ressources en Open Access liées à cette thèse.</p>
+
+  <!-- Conteneur des articles -->
+  <div class="blog-container">
+    <!-- Article 1 -->
+    <div class="blog-card">
+      <img src="{% static 'images/theses-37.jpg' %}" alt="Article 1" class="blog-image">
+      <div class="blog-content">
+        <h3 class="blog-category">Open Access</h3>
+        <h4 class="blog-title">Dépasser l’incertitude environnementale</h4>
+        <p>Qu’est-ce que l’économie publique comportementale appliquée à la protection de l’environnement ? Quelles sont les motivations, biais cognitifs et perception des individus face aux changements climatiques ?...</p>
+        <a href="https://pixel.parisnanterre.fr/la-these-du-mois-en-open-access-37-depasser-lincertitude-environnementale/" class="blog-link">Lire plus</a>
+      </div>
+    </div>
+
+    <!-- Article 2 -->
+    <div class="blog-card">
+      <img src="{% static 'images/these-27.jpg' %}" alt="Article 2" class="blog-image">
+      <div class="blog-content">
+        <h3 class="blog-category">Open Access</h3>
+        <h4 class="blog-title">Ce que j’ai encore raconté à mon chat</h4>
+        <p>De quelles manières les chats adaptent leur comportement aux environnements humains ? Comment favoriser leur bien-être ainsi qu’une relation harmonieuse ?...</p>
+        <a href="https://pixel.parisnanterre.fr/la-these-du-mois-en-open-access-27-ce-que-jai-encore-raconte-a-mon-chat/" class="blog-link">Lire plus</a>
+      </div>
+    </div>
+
+    <!-- Article 3 -->
+    <div class="blog-card">
+      <img src="{% static 'images/these-22.jpg' %}" alt="Article 3" class="blog-image">
+      <div class="blog-content">
+        <h3 class="blog-category">Open Access</h3>
+        <h4 class="blog-title">Les revues en ligne favorisent l’échange d’idées scientifiques</h4>
+        <p>Les outils numériques changent-ils nos façons d’écrire, de lire et de penser ? Le web social peut-il reproduire l’émulsion des salons de conversations scientifiques du XVIIe siècle ?...</p>
+        <a href="https://pixel.parisnanterre.fr/la-these-du-mois-en-open-access-22-les-revues-en-ligne-favorisent-lechange-didees-scientifiques/" class="blog-link">Lire plus</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <!-- Footer -->
+<footer>
+  <!-- Section blanche -->
+  <div class="footer-white">
+      <div class="footer-content">
+          <!-- Partie gauche : Logo Le Pixel et texte -->
+          <div class="footer-left">
+              <img src="{% static 'images/vignette_pixel.png' %}" alt="Logo Le Pixel" class="footer-logo">
+              <div class="footer-text">
+                  <p>Université Paris Nanterre<br>
+                      200 avenue de la République<br>
+                      92001 Nanterre Cedex<br>
+                      01 40 97 72 02 (BU)<br>
+                      <a href="https://bu.parisnanterre.fr/" target="_blank">www.bu.parisnanterre.fr</a>
+                  </p>
+              </div>
+          </div>
+
+          <!-- Centre vide -->
+          <div class="footer-center"></div>
+
+          <!-- Partie droite : Logo Université Paris Nanterre -->
+          <div class="footer-right">
+              <img src="{% static 'images/Logo_Université_Paris-Nanterre.svg.png' %}" alt="Logo Université Paris Nanterre" class="footer-logo-right">
+          </div>
+      </div>
+  </div>
+
+  <!-- Section rouge -->
+  <div class="footer-red">
+      <p>© 2024 Université Paris Nanterre - Tous droits réservés. <a href="https://bu.parisnanterre.fr/agenda-scd/le-pixel-luniversite-paris-nanterre-fait-la-part-belle-au-numerique">Mentions légales</a></p>
+  </div>
+</footer>
+
+
+    <script src="{% static 'js/script_accueil.js' %}"></script>
+</body>
+</html>

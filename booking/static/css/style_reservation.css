@@ -1,0 +1,500 @@
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    background-color: #f9f9f9;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  /* 1) Barre supérieure */
+  .top-bar {
+    background-color: #ae1f2b;
+    color: white;
+    padding: 5px 20px;
+    font-size: 0.7rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  
+  /* 2) Header principal */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  header img {
+    height: 50px;
+  }
+  
+  .header-titles {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+  
+  .header-subtitle {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ae1f2b;
+  }
+  
+  .vertical-bar {
+    width: 2px;
+    height: 30px;
+    background-color: #ae1f2b;
+    margin: 0 10px;
+  }
+  
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #4D4D4D; /* Gris similaire */
+    font-size: 14px;
+    font-weight: 500;
+    margin-left: 20px;
+}
+
+.nav-links a:hover {
+    color: #ae1f2b; /* Rouge */
+}
+
+ /* Container */
+.user-menu {
+  position: relative;
+  display: inline-block; /* ou flex si besoin */
+}
+
+/* Icône utilisateur */
+.user-icon {
+  width: 30px; 
+  height: 30px;
+  cursor: pointer;
+}
+
+/* Le menu est masqué par défaut */
+.dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;   /* juste sous l'icône */
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  list-style: none;
+  padding: 10px 0;
+  margin: 0;
+  z-index: 9999;
+}
+
+/* Le menu apparaît lorsque :
+ 1. la souris survole .user-menu 
+ 2. la souris survole la dropdown 
+ 3. l’icône ou un élément du dropdown a le focus (clavier ou clic) */
+.user-menu:hover .dropdown,
+.dropdown:hover,
+.user-menu:focus-within .dropdown {
+  display: block;
+}
+
+/* Style des éléments de la dropdown */
+.dropdown li {
+  padding: 5px 15px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+}
+
+.dropdown li:hover {
+  background-color: #f0f0f0;
+  color: #ae1f2b;
+}
+
+/* Style des liens dans la dropdown */
+.dropdown li a {
+  text-decoration: none; /* Supprime le soulignement */
+  color: inherit; /* Hérite de la couleur définie pour le texte */
+  font-size: 14px; /* Assure une taille de police uniforme */
+}
+
+.dropdown li a:hover {
+  color: #ae1f2b; /* Change la couleur au survol */
+  text-decoration: none; /* Pas de soulignement même au survol */
+}
+
+  
+  /* 4) Section Hero */
+  .hero {
+    position: relative;
+    text-align: center;
+    height: 300px;
+  }
+  
+  .hero-image img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+  }
+  
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(174, 31, 43, 0.3);
+  }
+  
+  /* Barre de critères (date => Poppins) */
+  .criteria-bar {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    gap: 15px;
+    padding: 15px 20px;
+    background: #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .criteria-bar select,
+  .criteria-bar input,
+  .criteria-bar button {
+    padding: 10px;
+    border: 1px solid #ae1f2b;
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif; /* Date en Poppins */
+  }
+  
+  .criteria-bar button {
+    background-color: #ae1f2b;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .criteria-bar button:hover {
+    background-color: #ed1c24;
+  }
+  
+  /* 5) Section "Salles disponibles" */
+  #spaces {
+    min-height: 80px; /* Espace pour éviter que le footer ne remonte trop */
+    margin-bottom: 40px; /* Espace sous le hero si aucun résultat */
+  }
+  
+  .boxes-container {
+    display: flex;
+    flex-direction: column; /* 1 container par ligne (horizontalement) */
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  /* Style d'une box (plein en largeur) */
+  .box {
+    background-color: #fff;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: row; /* Contenu horizontal */
+    align-items: center;
+    justify-content: flex-start;
+    padding: 15px;
+    transition: transform 0.3s;
+  }
+  
+  .box:hover {
+    transform: translateY(-3px);
+  }
+  
+  /* Icône */
+  .icon-box1 {
+    width: 40px;
+    margin-right: 15px;
+  }
+  
+  .box h3 {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+    margin-right: 30px; /* Espace après le titre */
+  }
+  
+  /* Slots container => mini conteneurs */
+  .slots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-start;
+    margin-right: auto;
+  }
+  
+  /* Slots (créneaux) */
+  .slot {
+    padding: 8px 12px;
+    border: 1px solid #d4e5d4;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #e8f9e7;
+    font-weight: 600;
+    color: #3d8b3d;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    font-size: 14px;
+  }
+  
+  .slot.unavailable {
+    background-color: #f0f0f0;
+    border-color: #e0e0e0;
+    color: #a0a0a0;
+    cursor: not-allowed;
+  }
+  
+  .slot:hover {
+    background-color: #d2f5d1;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Bouton "Réserver" */
+  .reserve-btn {
+    background-color: #ae1f2b;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: 20px; /* Espace sur la gauche du bouton */
+  }
+  
+  .reserve-btn:hover {
+    background-color: #ed1c24;
+  }
+  
+  /* 6) Section de confirmation */
+  .confirmation-section {
+    max-width: 600px;
+    margin: 30px auto 50px auto; /* + d'espace en bas */
+    background: linear-gradient(145deg, #ffffff, #f7f7f7);
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    padding: 25px 30px;
+    color: #444;
+  }
+  
+  .confirmation-section h2 {
+    text-align: center;
+    font-size: 24px;
+    color: #ae1f2b;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+  }
+  
+  .confirmation-section p {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #666;
+  }
+  
+  .email-container {
+    margin-bottom: 15px; /* Espace entre email et bouton */
+  }
+  
+  #confirm-email {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  #confirm-email::placeholder {
+    color: #aaa;
+    font-style: italic;
+  }
+  
+  #confirm-email:focus {
+    border-color: #ae1f2b;
+    box-shadow: 0 4px 8px rgba(174, 31, 43, 0.3);
+  }
+  
+  /* Bouton de confirmation */
+  #reservation-form button.modern-button {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(145deg, #ae1f2b, #ed1c24);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.3s;
+  }
+  
+  #reservation-form button.modern-button:hover {
+    background: linear-gradient(145deg, #ed1c24, #ae1f2b);
+    transform: scale(1.05);
+  }
+  
+  /* 7) Footer */
+  .footer-white {
+    background-color: #FCFCFC;
+    padding: 30px 20px;
+    border-top: 1px solid #ddd;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    width: 100%;
+  }
+  
+  .footer-left {
+    display: flex;
+    align-items: flex-start;
+    gap: 50px;
+  }
+  
+  .footer-logo {
+    width: 100px;
+    height: auto;
+  }
+  
+  .footer-text {
+    text-align: left;
+  }
+  
+  .footer-text p {
+    margin: 0;
+    font-size: 12px;
+    color: #333;
+    line-height: 1.6;
+  }
+  
+  .footer-text a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .footer-text a:hover {
+    text-decoration: underline;
+  }
+  
+  .footer-center {
+    flex: 1;
+  }
+  
+  .footer-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .footer-logo-right {
+    width: 150px;
+    height: auto;
+  }
+  
+  .footer-red {
+    background-color: #ae1f2b;
+    color: #FFFFFF;
+    padding: 5px 10px;
+    text-align: center;
+    font-size: 12px;
+  }
+  
+  .footer-red a {
+    color: #FFFFFF;
+    text-decoration: underline;
+    font-weight: bold;
+  }
+  
+  .footer-red a:hover {
+    text-decoration: none;
+  }
+  
+  /* 8) Responsive */
+  @media (max-width: 768px) {
+  
+    /* Criteria bar en colonne */
+    .criteria-bar {
+      flex-direction: column;
+    }
+  
+    /* Boxes => each one on a line horizontally */
+    .boxes-container {
+      gap: 15px;
+    }
+  
+    .box {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .slots {
+      justify-content: flex-start;
+    }
+  
+    /* Footer adaptatif */
+    .footer-content {
+      flex-direction: column;
+      text-align: center;
+      gap: 20px;
+    }
+  }
+  /* Slots sélectionnés */
+.slot.selected {
+    background-color: #666;         /* gris foncé */
+    color: #fff;                    /* texte blanc */
+    border: 2px solid #ae1f2b;      /* bordure rouge */
+  }
+  
+ 

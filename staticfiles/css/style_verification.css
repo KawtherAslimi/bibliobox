@@ -1,0 +1,132 @@
+/* Corps de la page */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to bottom right, #f6f6f6, #eaeaea);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Conteneur principal */
+.verification-container {
+    background: white;
+    border-radius: 15px;
+    padding: 30px 20px;
+    width: 400px;
+    text-align: center;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Zone Logo + Titre */
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+}
+
+.logo {
+    width: 100px; /* Taille augmentée */
+    height: auto;
+}
+
+.header-titles {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.vertical-bar {
+    width: 2px;
+    height: 20px;
+    background-color: #ae1f2b; /* Rouge */
+}
+
+.header-subtitle {
+    font-size: 0.9rem; /* Taille réduite */
+    font-weight: 600;
+    color: #ae1f2b; /* Rouge */
+}
+
+/* Titre */
+h2 {
+    font-size: 1.5rem;
+    color: #333;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Texte descriptif */
+.verification-container p {
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 20px;
+    font-weight: 400;
+}
+
+.code-input-container {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.code-input {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    text-align: center;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.code-input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+#verify-btn {
+    background-color: #ae1f2b !important; /* Forcer le style */
+    color: white !important;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#verify-btn:hover {
+    background-color: #8c1621 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+#verify-btn:active {
+    background-color: #70101a !important;
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+
+
+/* Chronomètre */
+#timer {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: #555;
+    font-weight: 500;
+}

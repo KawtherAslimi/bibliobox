@@ -1,0 +1,568 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Désactive le défilement horizontal */
+}
+
+body {
+    flex: 1;
+}
+
+.main-container {
+    flex: 1; /* S'assure que le contenu principal prend l'espace disponible */
+}
+
+/* Styles généraux */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #E6E6E6;
+}
+
+/* Barre supérieure */
+.top-bar {
+    background-color: #ae1f2b;
+    color: white;
+    padding: 5px 20px;
+    font-size: 0.7rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.top-bar div {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Header principal */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Header principal */
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+header img {
+    height: 50px;
+}
+
+.header-titles {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-title {
+    font-size: 1.2rem; /* Taille réduite de deux crans */
+    font-weight: 600;
+    color: #4D4D4D; /* Gris similaire au logo */
+}
+
+.vertical-bar {
+    width: 2px;
+    height: 30px;
+    background-color: #ae1f2b; /* Rouge du logo */
+}
+
+.header-subtitle {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ae1f2b; /* Rouge */
+    margin-left: auto; /* Pousse "Bibliothèques universitaires" vers la droite */
+    padding-left: 10px; /* Légère marge pour espacement avec la barre */
+}
+
+/* Liens dans le header */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #4D4D4D; /* Gris similaire */
+    font-size: 14px;
+    font-weight: 500;
+    margin-left: 20px;
+}
+
+.nav-links a:hover {
+    color: #ae1f2b; /* Rouge */
+}
+
+
+/* Menu utilisateur */
+.user-menu {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.user-menu img {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    object-fit: cover;
+}
+
+.user-menu .dropdown {
+    display: none; /* Masque par défaut */
+    position: absolute;
+    right: 0;
+    top: 40px;
+    background-color: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    list-style: none;
+    padding: 10px 0;
+    text-align: center;
+    min-width: 120px;
+    z-index: 1000; /* Assurez-vous que le menu est bien au-dessus */
+}
+
+.user-menu .dropdown li {
+    padding: 10px;
+}
+
+.user-menu .dropdown li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.user-menu .dropdown li a:hover {
+    background-color: #f2f2f2; /* Couleur de survol */
+}
+
+/* Afficher le menu déroulant au survol ou au clic */
+.user-menu:hover .dropdown,
+.user-menu:focus-within .dropdown {
+    display: block;
+}
+#student-number {
+    font-size: 14px; /* Taille de police réduite */
+    color: #666; /* Couleur légèrement grisée pour un style plus discret */
+    text-align: center; /* Centrer le numéro dans le menu */
+}
+
+/* Section Hero */
+.hero {
+    position: relative;
+    text-align: center;
+    color: white;
+    height: 50vh;
+    overflow: hidden;
+}
+
+.hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(174, 31, 43, 0.29); /* Superposition couleur avec transparence */
+}
+
+.hero-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Ajout d'ombre */
+}
+
+.hero-text h1 {
+    font-size: 2.5rem;
+    margin: 0;
+    font-weight: 600;
+    color: white;
+}
+
+
+
+ 
+/* Historique des réservations */
+/* Style du titre de la section */
+/* Ajout d'un espace sous la section du tableau */
+main {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    margin-bottom: 30px; /* Ajout de l'espace entre le tableau et le footer */
+}
+
+.section-title h2 {
+    font-size: 28px;
+    color: #ae1f2b;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    position: relative;
+}
+
+/* Ajout d'une ligne sous le titre */
+.section-title h2::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -10px;
+    width: 80px;
+    height: 4px;
+    background: #ae1f2b;
+    border-radius: 2px;
+}
+
+/* Style du tableau */
+#reservation-history {
+    width: 90%; /* Ajustement de la largeur pour être centré */
+    max-width: 800px; /* Largeur maximale */
+    margin: 0 auto;
+    overflow-x: auto; /* Gestion du défilement horizontal si nécessaire */
+}
+
+#history-table {
+    width: 100%;
+    border-collapse: collapse; /* Supprime les espaces entre les cellules */
+    background: rgb(250, 246, 246);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Ombre moderne */
+    border-radius: 10px; /* Coins arrondis */
+    overflow: hidden; /* Cache les débordements */
+}
+
+#history-table th,
+#history-table td {
+    padding: 15px;
+    text-align: center;
+    font-size: 14px;
+    border-bottom: 1px solid #ddd; /* Bordure inférieure */
+    color: #444;
+}
+
+#history-table th {
+    background-color: #ae1f2b; /* Rouge principal */
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+#history-table tr:last-child td {
+    border-bottom: none; /* Supprime la dernière bordure inférieure */
+}
+
+#history-table tr:nth-child(even) {
+    background-color: #f9f9f9; /* Fond gris clair pour les lignes paires */
+}
+
+#history-table tr:hover {
+    background-color: #f1f1f1; /* Fond plus clair au survol */
+}
+
+/* Style des boutons d'annulation */
+#history-table td .btn-cancel {
+    background: #ed1c24; /* Rouge vif */
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 8px; /* Coins arrondis */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+#history-table td .btn-cancel:hover {
+    background: #c4171c; /* Rouge plus sombre au survol */
+}
+
+/* Style pour "Aucune réservation" */
+#no-data {
+    color: #666;
+    font-style: italic;
+    text-align: center;
+    padding: 20px;
+    font-size: 16px;
+}
+
+/* Conteneur principal */
+.main-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+/* Partie gauche (Tableau des réservations) */
+.left-section {
+    flex: 2;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.left-section h2 {
+    font-size: 1.4rem;
+    color: #ae1f2b; /* Rouge principal */
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: bold;
+    position: relative;
+}
+
+.left-section h2::after {
+    content: "";
+    display: block;
+    width: 50px; /* Largeur de la barre */
+    height: 5px; /* Épaisseur de la barre */
+    background-color: #ae1f2b; /* Rouge principal */
+    margin: 10px auto;
+    border-radius: 2px;
+}
+
+/* Partie droite (Profil, Statistiques et Calendrier) */
+.left-section {
+    flex: 3; /* Augmente la largeur relative de la partie gauche */
+}
+
+.right-section {
+    flex: 1; /* Réduit la largeur relative de la partie droite */
+}
+
+.right-section {
+    flex: 1;
+    background-color: #fdfdfd;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.right-section h3 {
+    font-size: 1.4rem; /* Réduction de la taille */
+    color: #ae1f2b;
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.right-section h3::after {
+    content: "";
+    display: block;
+    width: 50px; /* Largeur de la barre */
+    height: 3px; /* Épaisseur de la barre */
+    background-color: #ae1f2b;
+    margin: 8px auto;
+    border-radius: 2px;
+}
+
+.right-section p {
+    font-size: 0.9rem; /* Réduction de la taille */
+    color: #444;
+    margin: 10px 0;
+}
+
+/* Bouton d'exportation */
+.right-section button {
+    background-color: #ae1f2b;
+    color: #fff;
+    padding: 12px 20px;
+    font-size: 0.9rem; /* Réduction de la taille */
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.right-section button:hover {
+    background-color: #8e1722;
+    transform: scale(1.05);
+}
+
+/* Barre horizontale entre sections */
+.horizontal-divider {
+    border: none;
+    height: 2px;
+    background-color: #ccc;
+    width: 80%;
+    margin: 25px 0;
+}
+
+/* Carrousel */
+.carousel-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 30px; /* Espace ajouté en bas */
+}
+
+.carousel {
+    display: flex;
+    transition: transform 0.5s ease-in-out; /* Défilement fluide */
+    align-items: center;
+}
+
+.carousel-item {
+    flex: 0 0 100%; /* Chaque élément prend toute la largeur */
+    text-align: center;
+    padding: 10px 0;
+}
+
+.carousel-item a {
+    color: #ae1f2b; /* Rouge principal */
+    font-size: 0.9rem; /* Réduction de la taille */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.carousel-item a:hover {
+    color: #8e1722; /* Rouge foncé au survol */
+}
+
+/* Décoration supplémentaire */
+.right-section hr {
+    border: none;
+    height: 2px;
+    background-color: #ccc;
+    width: 80%;
+    margin: 20px auto; /* Barre horizontale au centre */
+}
+
+
+
+
+/*Footer*/
+
+/* FOOTER GLOBAL */
+footer {
+    font-family: 'Arial', sans-serif;
+}
+
+/* Section blanche */
+.footer-white {
+    background-color: #FCFCFC;
+    padding: 30px 20px;
+    border-top: 1px solid #ddd;
+    display: flex;
+    justify-content: center;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    width: 100%;
+}
+
+/* Partie gauche : Logo et texte */
+.footer-left {
+    display: flex;
+    align-items: flex-start;
+    gap: 50px;
+}
+
+.footer-logo {
+    width: 100px; /* Ajuste la taille du logo */
+    height: auto;
+}
+
+.footer-text {
+    text-align: left;
+}
+
+.footer-text p {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+    line-height: 1.6;
+}
+
+.footer-text a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer-text a:hover {
+    text-decoration: underline;
+}
+
+/* Centre vide */
+.footer-center {
+    flex: 1; /* Occupe tout l'espace disponible */
+}
+
+/* Partie droite : Logo Université Paris Nanterre */
+.footer-right {
+    display: flex;
+    align-items: center;
+}
+
+.footer-logo-right {
+    width: 150px; /* Ajuste la taille du logo */
+    height: auto;
+}
+
+/* Section rouge */
+.footer-red {
+    background-color: #ae1f2b;
+    color: #FFFFFF;
+    padding: 1px 10px;
+    text-align: center;
+    font-size: 15px; /* Taille réduite pour le texte */
+
+}
+
+.footer-red a {
+    color: #FFFFFF;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.footer-red a:hover {
+    text-decoration: none;
+}
+
+
+
+
+

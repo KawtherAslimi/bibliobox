@@ -1,0 +1,155 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historique - Box Silencieux</title>
+    <link rel="stylesheet" href="{% static 'css/style_historique.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'images/LogoSVGNanterre.png' %}">
+</head>
+<body>
+    <!-- Barre supérieure -->
+    <div class="top-bar">
+        <div>
+            <span>📍 2 All. de l'Université, 92000 Nanterre</span>
+            <span>✉️ bu@liste.parisnanterre.fr</span>
+            <span>📞 01 40 97 72 02</span>
+        </div>
+    </div>
+
+    <!-- Header principal -->
+    <header>
+        <div class="header-left">
+            <img src="{% static 'images/Logo_Université_Paris-Nanterre.svg' %}" alt="Logo Université Paris Nanterre">
+            <div class="vertical-bar"></div>
+            <div class="header-titles">
+                <span class="header-subtitle">Bibliothèques universitaires</span>
+            </div>
+        </div>
+        
+        <div class="nav-right">
+            <nav class="nav-links">
+                <a href="{% url 'index' %}" class="active">Accueil</a>
+                <a href="{% url 'reservation' %}">Réservations</a>
+                <a href="https://www.parisnanterre.fr/" target="_blank">www.parisnanterre.fr</a>
+                <a href="https://portail.parisnanterre.fr/" target="_blank">ENT</a>
+                <a href="https://bu.parisnanterre.fr/nous-contacter" target="_blank">Contactez-nous</a>
+            </nav>
+        </div>
+
+        <div class="user-menu">
+            <img class="user-icon" src="{% static 'images/user.png' %}" alt="User Icon">
+            <ul class="dropdown">
+                <!-- Ici, on affichera le numéro étudiant en JS -->
+                <li id="student-number"></li>
+                <!-- Lien de déconnexion (exemple) -->
+                <li><a href="{% url 'index' %}">Déconnexion</a></li>
+            </ul>
+        </div>  
+    </header>
+
+    <!-- Section Hero -->
+    <section class="hero">
+        <img src="{% static 'images/perspective_crcn_accueil00-1.jpg' %}" alt="Espace intérieur">
+        <div class="hero-overlay"></div>
+        <div class="hero-text">
+            <h1>MON HISTORIQUE</h1>
+        </div>
+    </section>
+
+    <!-- Contenu principal divisé en 2 colonnes -->
+    <div class="main-container">
+        <!-- Partie gauche : Tableau des réservations -->
+        <div class="left-section">
+            <h2>Historique des Réservations</h2>
+            <div id="reservation-history">
+                <table id="history-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Heure</th>
+                            <th>Salle</th>
+                            <th>Statut</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-body">
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Partie droite : Profil et Statistiques -->
+        <div class="right-section">
+            <h3>Profil et Statistiques</h3>
+            <div class="user-info">
+              
+                <p><strong>Email :</strong> <span id="user-email">-</span></p>
+                <p><strong>Total de réservations :</strong> <span id="total-reservations">0</span></p>
+                <button id="export-excel">Exporter le tableau en Excel</button>
+            </div>
+            <hr class="horizontal-divider">
+            <h3>Calendrier culturel</h3>
+            <div class="carousel-container">
+                <div class="carousel">
+                    <div class="carousel-item"><a href="https://bu.parisnanterre.fr/calendrier-culturel" target="_blank">✨ 22 janvier - Atelier : Ateliers d'écriture avec la ZEP</a></div>
+                    <div class="carousel-item"><a href="https://bu.parisnanterre.fr/calendrier-culturel" target="_blank">✨ 23 janvier - Rencontre : Les matrimoines, littératures et poésies performées</a></div>
+                    <div class="carousel-item"><a href="https://bu.parisnanterre.fr/calendrier-culturel" target="_blank">✨ 29 janvier - Atelier : Ateliers d'écriture avec la ZEP</a></div>
+                    <div class="carousel-item"><a href="https://bu.parisnanterre.fr/calendrier-culturel" target="_blank">✨ 3 février - Atelier : Ateliers podcast avec la ZEP</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <!-- Section blanche -->
+        <div class="footer-white">
+            <div class="footer-content">
+                <!-- Partie gauche : Logo Le Pixel et texte -->
+                <div class="footer-left">
+                    <img src="{% static 'images/vignette_pixel.png' %}" 
+                         alt="Logo Le Pixel" 
+                         class="footer-logo">
+                    <div class="footer-text">
+                        <p>
+                            Université Paris Nanterre<br>
+                            200 avenue de la République<br>
+                            92001 Nanterre Cedex<br>
+                            01 40 97 72 02 (BU)<br>
+                            <a href="https://bu.parisnanterre.fr/" target="_blank">
+                                www.bu.parisnanterre.fr
+                            </a>
+                        </p>
+                    </div>
+                </div>
+    
+                <!-- Centre vide (pour séparer) -->
+                <div class="footer-center"></div>
+    
+                <!-- Partie droite : Logo Université Paris Nanterre -->
+                <div class="footer-right">
+                    <img src="{% static 'images/Logo_Université_Paris-Nanterre.svg.png' %}" 
+                         alt="Logo Université Paris Nanterre" 
+                         class="footer-logo-right">
+                </div>
+            </div>
+        </div>
+    
+        <!-- Section rouge en bas -->
+        <div class="footer-red">
+            <p>
+                © 2024 Université Paris Nanterre - Tous droits réservés.
+                <a href="https://bu.parisnanterre.fr/agenda-scd/le-pixel-luniversite-paris-nanterre-fait-la-part-belle-au-numerique">
+                    Mentions légales
+                </a>
+            </p>
+        </div>
+    </footer>
+    
+
+    <!-- Lien vers le script JS -->
+    <script src="{% static 'js/script_historique.js' %}"></script>
+</body>
+</html>

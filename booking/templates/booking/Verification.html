@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vérification du Code</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style_verification.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'images/LogoSVGNanterre.png' %}">
+</head>
+<body>
+    <div class="verification-container">
+        <div class="header">
+            <div class="logo-container">
+                <img src="{% static 'images/Logo_Université_Paris-Nanterre.svg' %}" alt="Logo Université Paris Nanterre" class="logo">
+                <div class="header-titles">
+                    <span class="vertical-bar"></span>
+                    <span class="header-subtitle">Bibliothèques universitaires</span>
+                </div>
+            </div>
+            <h2>🔑 Vérifiez votre Code</h2>
+        </div>
+        <p>Entrez le code à 4 chiffres envoyé à votre adresse universitaire.</p>
+
+        <form id="verification-form">
+            {% csrf_token %}
+            <div id="code-input-container" class="code-input-container">
+                <input type="text" maxlength="1" class="code-input" required>
+                <input type="text" maxlength="1" class="code-input" required>
+                <input type="text" maxlength="1" class="code-input" required>
+                <input type="text" maxlength="1" class="code-input" required>
+            </div>
+            <input type="hidden" id="hidden-code" name="code">
+            <button type="submit" id="verify-btn">Vérifier</button>
+        </form>
+        
+        
+        
+        
+        
+        
+        
+
+        <!-- Chronomètre -->
+        <p id="timer">Temps restant : <span id="time">3:00</span></p>
+    </div>
+
+    <!-- Script JS -->
+    <script src="{% static 'js/script_verification.js' %}"></script>
+</body>
+</html>

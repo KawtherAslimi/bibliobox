@@ -1,0 +1,462 @@
+/* Styles généraux */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #F8F9FA;
+}
+
+/* Barre supérieure */
+.top-bar {
+    background-color: #ae1f2b;
+    color: white;
+    padding: 5px 20px;
+    font-size: 0.7rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.top-bar div {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Header principal */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Header principal */
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+header img {
+    height: 50px;
+}
+
+.header-titles {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-title {
+    font-size: 1.2rem; /* Taille réduite de deux crans */
+    font-weight: 600;
+    color: #4D4D4D; /* Gris similaire au logo */
+}
+
+.vertical-bar {
+    width: 2px;
+    height: 30px;
+    background-color: #ae1f2b; /* Rouge du logo */
+}
+
+.header-subtitle {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ae1f2b; /* Rouge */
+    margin-left: auto; /* Pousse "Bibliothèques universitaires" vers la droite */
+    padding-left: 10px; /* Légère marge pour espacement avec la barre */
+}
+
+/* Liens dans le header */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #4D4D4D; /* Gris similaire */
+    font-size: 14px;
+    font-weight: 500;
+    margin-left: 20px;
+}
+
+.nav-links a:hover {
+    color: #ae1f2b; /* Rouge */
+}
+
+/* Section Hero */
+.hero {
+    position: relative;
+    text-align: center;
+    color: white;
+    height: 50vh;
+    overflow: hidden;
+}
+
+.hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(174, 31, 43, 0.29); /* Superposition couleur avec transparence */
+}
+
+.hero-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Ajout d'ombre */
+}
+
+.hero-text h1 {
+    font-size: 2.5rem;
+    margin: 0;
+    font-weight: 600;
+    color: white;
+}
+
+/* Section pédagogique */
+.info-section {
+    display: flex;
+    align-items: flex-start;
+    gap: 100px;
+    margin: 40px auto;
+    padding: 40px;
+    max-width: 1200px;
+}
+
+.info-text {
+    flex: 1;
+    max-width: 500px;
+    font-size: 15px;
+    color: #424242;
+    line-height: 1.8;
+    text-align: justify;
+}
+
+.info-text h2 {
+    font-size: 27px;
+    font-weight: 600;
+    color: black;
+    margin-bottom: 15px;
+
+}
+.info-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px; /* Ajustez cette valeur pour descendre l'image */
+}
+
+
+.info-image img {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Formulaire de connexion */
+.form-section {
+    margin: 50px auto;
+    padding: 20px;
+}
+
+.form-section h2 {
+    font-size: 30px;
+    font-weight: 600;
+    text-align: center;
+    color: black;
+    margin-bottom: 30px;
+}
+
+.form-container {
+    background-color: white;
+    margin: 0 auto;
+    width: 90%;
+    max-width: 400px;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    animation: fadeIn 1s ease-out;
+}
+
+.form-container .emoji {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.form-container h2 {
+    font-size: 1.6rem;
+    color: black;
+    margin-bottom: 10px;
+}
+
+.form-container p {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.form-container input[type="email"] {
+    display: block; /* Assure un centrage horizontal */
+    width: 100%; /* Utilise toute la largeur disponible */
+    max-width: 350px; /* Limite la largeur maximale pour un bon design */
+    padding: 12px; /* Augmente l'espacement interne */
+    margin: 0 auto 20px; /* Centre horizontalement et ajoute un espace en bas */
+    border: 1px solid #ccc; /* Bordure gris clair */
+    border-radius: 15px; /* Coins très arrondis */
+    font-size: 16px; /* Taille du texte pour une meilleure lisibilité */
+    text-align: center; /* Centre le texte à l'intérieur du champ */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Effet au survol et au focus */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Ajoute une légère ombre */
+}
+
+.form-container input[type="email"]:focus {
+    border-color: #ae1f2b; /* Change la couleur de la bordure au focus */
+    outline: none; /* Supprime la bordure par défaut */
+    box-shadow: 0 4px 8px rgba(174, 31, 43, 0.3); /* Ajoute une ombre rouge subtile */
+}
+
+
+.form-container button {
+    width: 100%;
+    padding: 12px;
+    background-color: #ed1c24;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.form-container button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+
+/* SECTION BLOG */
+.blog-section {
+    padding: 50px 20px !important;
+    background-color: #F8F9FA;
+    text-align: center !important;
+}
+
+.blog-title1 {
+    font-size: 30px !important; /* Taille idéale pour un titre de section */
+    font-weight: bold !important;
+    color: #050505 !important; /* Couleur noire légèrement douce */
+    margin-bottom: 20px !important;
+    line-height: 1.2; /* Ajuste l'espacement pour un titre harmonieux */
+    text-align: center; /* Aligne le titre au centre */
+}
+
+
+.blog-subtitle {
+    font-size: 16px !important;
+    color: #666 !important;
+    margin-bottom: 40px !important;
+}
+
+/* Conteneur des articles */
+.blog-container {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 20px !important;
+    flex-wrap: wrap !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+}
+
+/* Carte individuelle */
+.blog-card {
+    background-color: #fff !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+    overflow: hidden !important;
+    width: 300px !important;
+    transition: transform 0.3s, box-shadow 0.3s !important;
+}
+
+.blog-card:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Image de la carte */
+.blog-image {
+    width: 100% !important;
+    height: 180px !important;
+    object-fit: cover !important;
+}
+
+/* Contenu de la carte */
+.blog-content {
+    padding: 20px !important;
+    text-align: left !important;
+}
+
+.blog-category {
+    font-size: 12px !important;
+    font-weight: bold !important;
+    text-transform: uppercase !important;
+    color: #ae1f2b !important;
+    margin-bottom: 8px !important;
+}
+
+.blog-title {
+    font-size: 18px !important;
+    font-weight: bold !important;
+    color: #333 !important;
+    margin-bottom: 10px !important;
+}
+
+.blog-content p {
+    font-size: 14px !important;
+    color: #555 !important;
+    line-height: 1.5 !important;
+    margin-bottom: 15px !important;
+}
+
+/* Lien "Lire plus" */
+.blog-link {
+    font-size: 14px !important;
+    color: #ae1f2b !important;
+    text-decoration: none !important;
+    font-weight: bold !important;
+    transition: color 0.3s !important;
+}
+
+.blog-link:hover {
+    color: #ae1f2b !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .blog-container {
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+
+    .blog-card {
+        width: 100% !important;
+        max-width: 350px !important;
+    }
+}
+
+/*Footer*/
+
+/* FOOTER GLOBAL */
+footer {
+    font-family: 'Arial', sans-serif;
+}
+
+/* Section blanche */
+.footer-white {
+    background-color: #FCFCFC;
+    padding: 30px 20px;
+    border-top: 1px solid #ddd;
+    display: flex;
+    justify-content: center;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    width: 100%;
+}
+
+/* Partie gauche : Logo et texte */
+.footer-left {
+    display: flex;
+    align-items: flex-start;
+    gap: 50px;
+}
+
+.footer-logo {
+    width: 100px; /* Ajuste la taille du logo */
+    height: auto;
+}
+
+.footer-text {
+    text-align: left;
+}
+
+.footer-text p {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+    line-height: 1.6;
+}
+
+.footer-text a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer-text a:hover {
+    text-decoration: underline;
+}
+
+/* Centre vide */
+.footer-center {
+    flex: 1; /* Occupe tout l'espace disponible */
+}
+
+/* Partie droite : Logo Université Paris Nanterre */
+.footer-right {
+    display: flex;
+    align-items: center;
+}
+
+.footer-logo-right {
+    width: 150px; /* Ajuste la taille du logo */
+    height: auto;
+}
+
+/* Section rouge */
+.footer-red {
+    background-color: #ae1f2b;
+    color: #FFFFFF;
+    padding: 1px 10px;
+    text-align: center;
+    font-size: 15px; /* Taille réduite pour le texte */
+
+}
+
+.footer-red a {
+    color: #FFFFFF;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.footer-red a:hover {
+    text-decoration: none;
+}
+

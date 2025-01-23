@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Réservation - Box Silencieux</title>
+  <!-- Police Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Feuille de style -->
+  <link rel="stylesheet" href="{% static 'css/style_reservation.css' %}">
+  <link rel="icon" type="image/png" href="{% static 'images/LogoSVGNanterre.png' %}">
+</head>
+<body>
+  <!-- Barre supérieure -->
+  <div class="top-bar">
+    <div>
+      <span>📍 2 All. de l'Université, 92000 Nanterre</span>
+      <span>✉️ bu@liste.parisnanterre.fr</span>
+      <span>📞 01 40 97 72 02</span>
+    </div>
+  </div>
+
+  <!-- Header principal -->
+  <header>
+    <div class="header-left">
+      <img src="{% static 'images/Logo_Université_Paris-Nanterre.svg' %}" alt="Logo Université Paris Nanterre">
+      <div class="vertical-bar"></div>
+      <div class="header-titles">
+        <span class="header-subtitle">Bibliothèques universitaires</span>
+      </div>
+    </div>
+
+    <div class="nav-right">
+      <nav class="nav-links">
+        <a href="{% url 'index' %}" class="active">Accueil</a>
+        <a href="{% url 'historique' %}" class="active">Historique</a>
+        <a href="https://www.parisnanterre.fr/" target="_blank">www.parisnanterre.fr</a>
+        <a href="https://portail.parisnanterre.fr/" target="_blank">ENT</a>
+        <a href="https://bu.parisnanterre.fr/nous-contacter" target="_blank">Contactez-nous</a>
+      </nav>
+    </div>
+
+    <div class="user-menu">
+      <img class="user-icon" src="{% static 'images/user.png' %}" alt="User Icon">
+      <ul class="dropdown">
+        <li><a href="{% url 'index' %}">Déconnexion</a></li>
+      </ul>
+    </div>
+    
+  </header>
+
+  <!-- Section Hero -->
+  <section class="hero">
+    <div class="hero-image">
+      <img src="{% static 'images/heroReservationFinal.jpg' %}" alt="Bibliothèque">
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="criteria-bar">
+      <select id="box-selection">
+        <option value="">Choisir un lieu</option>
+        <option value="Pixel">PIXEL</option>
+        <option value="Droit">DROIT</option>
+      </select>
+      <!-- Input date stylé en poppins -->
+      <input type="date" id="date-selection" aria-label="Date de réservation">
+      <select id="start-time">
+        <option value="">Heure de début</option>
+      </select>
+      <select id="end-time">
+        <option value="">Heure de fin</option>
+      </select>
+      <button id="search-btn">Rechercher</button>
+    </div>
+  </section>
+
+  <!-- Salles disponibles -->
+  <section id="spaces">
+    <div id="boxes-container" class="boxes-container"></div>
+  </section>
+
+  <!-- Section de confirmation -->
+  <section id="confirmation-form" style="display: none;" class="confirmation-section">
+    <h2>Confirmation de Réservation</h2>
+    <p><strong>Date :</strong> <span id="confirm-date"></span></p>
+    <p><strong>Créneau :</strong> <span id="confirm-slot"></span></p>
+    <p><strong>Salle :</strong> <span id="confirm-room"></span></p>
+
+    <div class="email-container">
+      <input
+        type="email"
+        id="confirm-email"
+        name="confirm-email"
+        placeholder="Ex: 12345678@parisnanterre.fr"
+        class="modern-input"
+      />
+    </div>
+
+    <form id="reservation-form">
+      <button type="submit" class="modern-button">Confirmer</button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <!-- Section blanche -->
+    <div class="footer-white">
+      <div class="footer-content">
+        <!-- Partie gauche : Logo Le Pixel et texte -->
+        <div class="footer-left">
+          <img src="{% static 'images/vignette_pixel.png' %}" alt="Logo Le Pixel" class="footer-logo">
+          <div class="footer-text">
+            <p>
+              Université Paris Nanterre<br>
+              200 avenue de la République<br>
+              92001 Nanterre Cedex<br>
+              01 40 97 72 02 (BU)<br>
+              <a href="https://bu.parisnanterre.fr/" target="_blank">www.bu.parisnanterre.fr</a>
+            </p>
+          </div>
+        </div>
+        <!-- Centre vide -->
+        <div class="footer-center"></div>
+        <!-- Partie droite : Logo Université Paris Nanterre -->
+        <div class="footer-right">
+          <img src="{% static 'images/Logo_Université_Paris-Nanterre.svg.png' %}" alt="Logo Université Paris Nanterre" class="footer-logo-right">
+        </div>
+      </div>
+    </div>
+
+    <!-- Section rouge -->
+    <div class="footer-red">
+      <p>
+        © 2024 Université Paris Nanterre - Tous droits réservés.
+        <a href="https://bu.parisnanterre.fr/agenda-scd/le-pixel-luniversite-paris-nanterre-fait-la-part-belle-au-numerique">Mentions légales</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Script JS Reservation -->
+  <script src="{% static 'js/script_reservation.js' %}"></script>
+</body>
+</html>

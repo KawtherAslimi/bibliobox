@@ -1,0 +1,241 @@
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    background-color: #f9f9f9;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Barre supérieure */
+.top-bar {
+    background-color: #ae1f2b;
+    color: white;
+    padding: 5px 20px;
+    font-size: 0.7rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+/* Header principal */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+header img {
+    height: 50px;
+}
+
+.header-titles {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.header-subtitle {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ae1f2b;
+}
+
+/* Barre verticale rouge */
+.vertical-bar {
+    width: 2px;
+    height: 30px;
+    background-color: #ae1f2b;
+    margin: 0 10px;
+}
+
+/* Hero Section */
+.hero {
+    position: relative;
+    text-align: center;
+    height: 300px;
+}
+
+.hero img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(174, 31, 43, 0.3);
+}
+
+/* Barre de critères */
+.criteria-bar {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    gap: 15px;
+    padding: 15px;
+    background: #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.criteria-bar select,
+.criteria-bar input,
+.criteria-bar button {
+    padding: 10px;
+    border: 1px solid #ae1f2b;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.criteria-bar button {
+    background-color: #ae1f2b;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.criteria-bar button:hover {
+    background-color: #ed1c24;
+}
+
+/* Section de confirmation */
+#confirmation-form {
+    max-width: 600px;
+    margin: 30px auto;
+    background: linear-gradient(145deg, #ffffff, #f7f7f7);
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    padding: 25px 30px;
+    font-family: 'Poppins', sans-serif;
+    color: #444;
+}
+
+#confirmation-form h2 {
+    text-align: center;
+    font-size: 24px;
+    color: #ae1f2b;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+}
+
+#confirmation-form p {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #666;
+}
+
+/* Champ email design et moderne */
+#confirm-email {
+    width: 100%;
+    padding: 12px 16px;
+    margin-top: 10px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#confirm-email::placeholder {
+    color: #aaa;
+    font-style: italic;
+}
+
+#confirm-email:focus {
+    border-color: #ae1f2b;
+    box-shadow: 0 4px 8px rgba(174, 31, 43, 0.3);
+}
+
+/* Bouton de confirmation */
+#reservation-form button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(145deg, #ae1f2b, #ed1c24);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.3s;
+}
+
+#reservation-form button:hover {
+    background: linear-gradient(145deg, #ed1c24, #ae1f2b);
+    transform: scale(1.05);
+}
+
+/* Footer */
+footer {
+    background-color: #ae1f2b;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+    margin-top: auto;
+}
+
+/* Slots */
+.slot {
+    padding: 10px 15px;
+    border: 1px solid #d4e5d4;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    background-color: #e8f9e7;
+    font-weight: 600;
+    color: #3d8b3d;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    width: 60px;
+}
+
+.slot.unavailable {
+    background-color: #f0f0f0;
+    border-color: #e0e0e0;
+    color: #a0a0a0;
+    cursor: not-allowed;
+}
+
+.slot:hover {
+    background-color: #d2f5d1;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #confirmation-form {
+        padding: 15px;
+    }
+
+    #reservation-form button {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
