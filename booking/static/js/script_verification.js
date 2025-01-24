@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const hiddenCodeInput = document.getElementById("hidden-code");
     const verificationForm = document.getElementById("verification-form");
 
-    // Quand on tape dans un champ, on passe automatiquement au suivant
+    // Quand on tape dans une zone de texte, on passe automatiquement au suivant
     codeInputs.forEach((input, index) => {
         input.addEventListener("input", () => {
             if (input.value.length === 1 && index < codeInputs.length - 1) {
@@ -15,7 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
             hiddenCodeInput.value = Array.from(codeInputs).map(input => input.value).join("");
         });
 
-        // Gestion de la touche "Retour arrière" pour revenir au champ précédent
         input.addEventListener("keydown", (e) => {
             if (e.key === "Backspace" && input.value === "" && index > 0) {
                 codeInputs[index - 1].focus();
@@ -25,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Quand on soumet le formulaire
     verificationForm.addEventListener("submit", (event) => {
-        event.preventDefault(); // On empêche le rechargement de la page
+        event.preventDefault();
 
         const enteredCode = hiddenCodeInput.value.trim();
         if (enteredCode.length !== 4) {
@@ -86,10 +85,10 @@ document.addEventListener("DOMContentLoaded", () => {
             // Désactive le bouton de validation pour empêcher d'envoyer un code expiré
             verificationButton.disabled = true;
 
-            // Optionnel : on pourrait rediriger vers la page d'accueil
-            // window.location.href = "/index/"; 
+            // on redirige vers la page d'accueil
+            window.location.href = "/index/"; 
         }
 
         timeLeft--;
-    }, 1000); // Décompte chaque seconde
+    }, 1000); 
 });
