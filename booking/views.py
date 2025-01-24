@@ -1,5 +1,3 @@
-# booking/views.py
-
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -36,40 +34,38 @@ from .models import VerificationCode
 
 def index(request):
     """
-    Page d'accueil : 
-    - L'étudiant saisit son email universitaire.
-    - On génère un code de vérification (4 chiffres) envoyé par mail au format HTML.
+    Page d'accueil où l'étudiant entre son email de la fac et reçoit un code de vérification à 4 chiffres envoyé par mail en HTML.
     """
     if request.method == "POST":
         email = request.POST.get('email', '').strip()
 
-        # Vérification : champ non vide
+        # On vérifie que le champ email n'est pas vide
         if not email:
             messages.error(request, "Veuillez entrer une adresse email.")
             return redirect('index')
 
-        # Vérification : email universitaire
+        # On vérifie que c'est bien une adresse universitaire
         if not email.endswith("@parisnanterre.fr"):
             messages.error(request, "L'adresse email doit être universitaire (@parisnanterre.fr).")
             return redirect('index')
 
-        # Générer un code à 4 chiffres
+        # On génère un code à 4 chiffres
         code = str(random.randint(1000, 9999))
 
-        # Mettre à jour ou créer l'enregistrement dans la table VerificationCode
+        # On met à jour ou on crée un enregistrement dans VerificationCode
         VerificationCode.objects.update_or_create(
             email=email,
             defaults={'generated_code': code, 'entered_code': None}
         )
 
-        # URLs des logos
+        # Adresses des logos
         URL_LOGO_PIXEL = "https://bu.parisnanterre.fr/medias/photo/vignette-pixel_1622616619465-png"
         URL_LOGO_NANTERRE = (
             "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/"
             "Logo_Universit%C3%A9_Paris-Nanterre.svg/473px-Logo_Universit%C3%A9_Paris-Nanterre.svg.png"
         )
 
-        # Préparation de l'affichage des 4 chiffres (petits blocs)
+        # On crée une version HTML du code en petits blocs
         code_digits_html = ''.join(
             f"""
             <div style="
@@ -97,36 +93,27 @@ def index(request):
         </head>
         <body style="margin:0; padding:0; font-family: Arial, sans-serif; text-align:center;">
 
-            <!-- En-tête : logos et titre -->
             <div style="display: flex; justify-content: center; align-items: center; margin: 20px 0;">
-                <!-- Logo Pixel à gauche -->
                 <div style="margin-right: 30px;">
                     <img src="{URL_LOGO_PIXEL}" alt="Logo Pixel" style="max-height: 80px;">
                 </div>
-
-                <!-- Titre au centre -->
                 <h1 style="margin: 0; font-size: 28px;">
                     Box Silencieux
                 </h1>
-
-                <!-- Logo Paris Nanterre à droite -->
                 <div style="margin-left: 30px;">
                     <img src="{URL_LOGO_NANTERRE}" alt="Logo Université Paris Nanterre" style="max-height: 80px;">
                 </div>
             </div>
 
-            <!-- Phrase explicative -->
             <p style="font-size: 16px; margin-top: 20px;">
                 Voici votre code de validation. Vous avez 3 minutes pour l'entrer,
                 passé ce délai, il expirera.
             </p>
 
-            <!-- Affichage du code en 4 blocs -->
             <div style="margin-top: 30px;">
                 {code_digits_html}
             </div>
 
-            <!-- Signature en bas -->
             <div style="margin-top: 40px; text-align: center;">
                 <img src="{URL_LOGO_NANTERRE}" alt="Logo Université Paris Nanterre" 
                      style="max-height: 50px; display: block; margin: 0 auto 10px auto;">
@@ -145,7 +132,7 @@ def index(request):
         </html>
         """
 
-        # Envoi de l'email (fallback en texte brut pour les clients qui ne lisent pas le HTML)
+        # On envoie l'email avec un fallback texte brut
         try:
             send_mail(
                 subject='Votre code de vérification - Box Silencieux',
@@ -153,28 +140,24 @@ def index(request):
                 from_email='boxsilencieusenoreply@gmail.com',
                 recipient_list=[email],
                 fail_silently=False,
-                html_message=html_content,  # Le contenu HTML
+                html_message=html_content,
             )
             messages.success(request, f"Un code de vérification a été envoyé à {email}.")
         except Exception as e:
             messages.error(request, f"Erreur lors de l'envoi de l'email : {e}")
             return redirect('index')
 
-        # Stocker l'email en session
+        # On sauvegarde l'email en session
         request.session['email'] = email
         return redirect('verification')
 
-    # Si GET ou autre, on affiche la page index
+    # Si on ne reçoit pas de données, on affiche la page index
     return render(request, 'booking/index.html')
-
 
 
 def verification(request):
     """
-    Page de vérification du code :
-    - L'étudiant saisit le code reçu par mail.
-    - Si correct, on crée/associe un compte User et un StudentProfile, 
-      puis on connecte l'utilisateur.
+    Page où on vérifie le code reçu par mail. Si le code est bon, on crée ou associe un compte utilisateur et on connecte directement l'étudiant.
     """
     if request.method == "POST":
         email = request.session.get('email', '')
@@ -187,26 +170,26 @@ def verification(request):
         try:
             v_obj = VerificationCode.objects.get(email=email)
             if v_obj.generated_code == code:
-                # Créer ou récupérer le StudentProfile
+                # On récupère ou on crée le profil étudiant
                 student, _ = StudentProfile.objects.get_or_create(email=email)
 
-                # Créer ou récupérer le User
+                # On récupère ou on crée l'utilisateur
                 user, _ = User.objects.get_or_create(
                     email=email,
                     defaults={'username': email.split('@')[0]}
                 )
 
-                # Générer un mot de passe aléatoire
+                # On génère un mot de passe aléatoire
                 random_password = get_random_string(length=12)
                 user.set_password(random_password)
                 user.save()
 
-                # Lier StudentProfile et User
+                # On associe le profil étudiant à l'utilisateur
                 if student.user is None:
                     student.user = user
                     student.save()
 
-                # Connecter l'utilisateur
+                # On connecte l'utilisateur
                 login(request, user)
                 request.session['student_id'] = student.id
 
@@ -223,8 +206,7 @@ def verification(request):
 @csrf_exempt
 def verify_code(request):
     """
-    Version AJAX de la vérification du code.
-    Renvoie un JSON { success: bool, message: str, redirect: str }
+    Vérification du code en AJAX. Renvoie un objet JSON avec le résultat (succès ou erreur) et une éventuelle redirection.
     """
     if request.method == "POST":
         try:
@@ -248,7 +230,6 @@ def verify_code(request):
                     'username': email.split('@')[0]
                 })
 
-                # Générer un mot de passe aléatoire
                 random_password = get_random_string(length=12)
                 user.set_password(random_password)
                 user.save()
@@ -277,8 +258,7 @@ def verify_code(request):
 @login_required
 def reservation(request):
     """
-    Page de réservation, accessible uniquement après connexion.
-    On affiche les réservations déjà faites.
+    Page pour réserver, accessible seulement si on est connecté. Affiche aussi les réservations déjà passées.
     """
     student_id = request.session.get('student_id')
     if not student_id:
@@ -289,7 +269,7 @@ def reservation(request):
     except StudentProfile.DoesNotExist:
         return redirect('index')
 
-    # Récupérer les réservations associées à l'utilisateur
+    # On cherche les réservations déjà faites par cet utilisateur
     reservations = Reservation.objects.filter(user=student.user).select_related('time_slot').order_by('-time_slot__date')
 
     return render(request, 'booking/Reservation.html', {
@@ -299,24 +279,10 @@ def reservation(request):
     })
 
 
-# booking/views.py
-
-from django.shortcuts import render, redirect
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.decorators import login_required
-from django.db.models import Q
-from django.db import transaction
-from datetime import date
-import json
-
-from .models import Reservation, TimeSlot, StudentProfile
-
 @login_required
 def historique(request):
     """
-    Affiche la page HTML de l'historique des réservations.
-    Le tableau est rempli dynamiquement en JS (fetch vers /api/reservation-history/).
+    Montre la page avec tout l'historique des réservations. Le tableau est rempli en JS via un fetch vers /api/reservation-history/.
     """
     student_id = request.session.get('student_id')
     if not student_id:
@@ -332,6 +298,7 @@ def historique(request):
         "user_email": student.email,
     }
     return render(request, 'booking/Historique.html', context)
+
 
 @login_required
 def reservation_history_api(request):
@@ -363,7 +330,6 @@ def reservation_history_api(request):
 
             results.append({
                 "reservation_id": resa.id,
-                # Renvoi ISO : "2025-01-17"
                 "date": ts.date.isoformat(),
                 "time_range": f"{ts.start_time.strftime('%H:%M')} - {ts.end_time.strftime('%H:%M')}",
                 "room": ts.box.name,
@@ -375,13 +341,12 @@ def reservation_history_api(request):
     else:
         return JsonResponse({"success": False, "message": "Méthode non autorisée."}, status=405)
 
+
 @login_required
 @csrf_exempt
 def cancel_reservation_api(request):
     """
-    POST => { reservation_id: 123 }
-    - Remet le TimeSlot en is_available = True
-    - Supprime la Reservation correspondante
+    Lors d'une requête POST avec { reservation_id: 123 }, on remet le TimeSlot en disponible et on supprime la réservation correspondante.
     """
     if request.method == "POST":
         try:
@@ -399,20 +364,20 @@ def cancel_reservation_api(request):
                 return JsonResponse({"success": False, "message": "Utilisateur non lié au profil."}, status=400)
 
             with transaction.atomic():
-                # Récupérer la Reservation pour ce user
+                # On récupère la réservation en lockant la table (select_for_update)
                 resa = Reservation.objects.select_for_update().filter(id=resa_id, user=student.user).first()
                 if not resa:
                     return JsonResponse({"success": False, "message": "Réservation introuvable ou non autorisée."}, status=404)
 
-                # Vérifier si c'est déjà passé
+                # On vérifie que la réservation n'est pas déjà passée
                 if resa.time_slot.date < date.today():
                     return JsonResponse({"success": False, "message": "Impossible d'annuler une réservation passée."}, status=400)
 
-                # Remet le TimeSlot en dispo
+                # On remet le créneau disponible
                 resa.time_slot.is_available = True
                 resa.time_slot.save()
 
-                # Supprime la Reservation
+                # On supprime la réservation
                 resa.delete()
 
             return JsonResponse({"success": True, "message": "Réservation annulée avec succès."})
@@ -426,9 +391,9 @@ def cancel_reservation_api(request):
     else:
         return JsonResponse({"success": False, "message": "Méthode non autorisée."}, status=405)
     
+
 @login_required
 def get_user_email(request):
-    
     student_id = request.session.get('student_id')
     if not student_id:
         return JsonResponse({"success": False, "message": "Non connecté."}, status=403)
@@ -443,7 +408,7 @@ def get_user_email(request):
 @login_required
 def get_student_number(request):
     """
-    Retourne le student_number en JSON (ex: { "student_number": "123456" }).
+    Renvoie le numéro étudiant en JSON (par exemple: { "student_number": "123456" }).
     """
     try:
         sn = request.user.studentprofile.student_number
@@ -452,15 +417,12 @@ def get_student_number(request):
     return JsonResponse({'student_number': sn})
 
 
-
-
-
 @require_GET
 @login_required
 def get_available_boxes(request):
     """
     Ex: /api/available-boxes/?date=2025-01-17&start_time=08:30&end_time=09:45&type=Pixel
-    Renvoie un tableau de boxes, chaque box ayant un champ "id", "name" et "slots".
+    Renvoie un tableau de boxes, chaque box avec "id", "name" et "slots".
     """
     filter_type = request.GET.get('type')
     date_str = request.GET.get('date')
@@ -476,7 +438,6 @@ def get_available_boxes(request):
     if not all([date_obj, st_time, ed_time]):
         return JsonResponse({'boxes': []}, status=200)
 
-    # Filtrer par type
     if filter_type.lower() == "pixel":
         box_qs = Box.objects.filter(name__startswith="PIXEL")
     elif filter_type.lower() == "droit":
@@ -484,7 +445,6 @@ def get_available_boxes(request):
     else:
         return JsonResponse({'boxes': []}, status=200)
 
-    # Récupération des TimeSlot
     ts_qs = TimeSlot.objects.filter(
         box__in=box_qs,
         date=date_obj,
@@ -493,29 +453,28 @@ def get_available_boxes(request):
         is_available=True
     ).select_related('box').order_by('box__name', 'start_time')
 
-    # Regrouper par nom de box
     grouped = {}
     for ts in ts_qs:
         bname = ts.box.name
         if bname not in grouped:
             grouped[bname] = []
         grouped[bname].append({
-            'id': ts.id,  # ID du TimeSlot
+            'id': ts.id,
             'availability_time': ts.start_time.strftime("%H:%M"),
             'is_available': ts.is_available,
         })
 
-    # Construire la liste finale
     results = []
     for b in box_qs.order_by('name'):
         bname = b.name
         results.append({
-            'id': b.id,  # ID de la Box
+            'id': b.id,
             'name': bname,
             'slots': grouped.get(bname, [])
         })
 
     return JsonResponse({'boxes': results}, status=200)
+
 
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -529,18 +488,17 @@ from datetime import date, timedelta, datetime
 from .models import StudentProfile, TimeSlot, Reservation
 
 def get_monday(d: date) -> date:
-    """Retourne le lundi de la semaine de la date d."""
-    return d - timedelta(days=d.weekday())  # Lundi = weekday=0
+    """
+    Trouve le lundi de la même semaine que la date donnée.
+    """
+    return d - timedelta(days=d.weekday())
+
 @csrf_exempt
 @login_required
 def make_reservation(request):
     """
-    Règles demandées :
-    - 2 réservations max par semaine (lundi->dimanche) par utilisateur.
-    - Si l'utilisateur a déjà 2 réservations dans sa semaine courante,
-      il ne peut réserver dans une nouvelle semaine (semaine suivante ou plus)
-      que s'il a attendu 24h depuis sa dernière réservation.
-    - Impossible de faire 3 résas dans la même semaine.
+    Gère la création d'une réservation avec les règles suivantes:
+    2 réservations max par semaine, et s'il y a déjà 2 réservations dans la semaine en cours, il faut attendre 24h avant de réserver dans la semaine suivante. Il est impossible de faire 3 réservations dans une même semaine.
     """
     if request.method != "POST":
         return JsonResponse({"success": False, "message": "Méthode non autorisée."}, status=405)
@@ -553,7 +511,6 @@ def make_reservation(request):
         end_str   = data.get("end_time")
         email     = data.get("email")
 
-        # 1) Vérification des champs requis
         missing = []
         if not box_id:    missing.append("box_id")
         if not date_str:  missing.append("date")
@@ -566,7 +523,6 @@ def make_reservation(request):
                 "message": f"Paramètres manquants : {', '.join(missing)}."
             }, status=400)
 
-        # 2) Récupérer le StudentProfile + User
         try:
             student = StudentProfile.objects.get(email=email)
         except StudentProfile.DoesNotExist:
@@ -576,38 +532,32 @@ def make_reservation(request):
         if not user:
             return JsonResponse({"success": False, "message": "Utilisateur non lié au profil étudiant."}, status=400)
 
-        # 3) Parser la date/heure
         parsed_date  = parse_date(date_str)
         parsed_start = parse_time(start_str)
         parsed_end   = parse_time(end_str)
         if not parsed_date or not parsed_start or not parsed_end:
             return JsonResponse({"success": False, "message": "Date ou heure invalide."}, status=400)
 
-        # 4) Calcul de la semaine de la date ciblée
         monday_of_parsed = get_monday(parsed_date)
         sunday_of_parsed = monday_of_parsed + timedelta(days=6)
 
         with transaction.atomic():
-            # a) Vérifier le nombre de résas déjà faites pour CETTE semaine
             resa_same_week_count = Reservation.objects.filter(
                 user=user,
                 time_slot__date__range=(monday_of_parsed, sunday_of_parsed)
             ).count()
 
             if resa_same_week_count >= 2:
-                # => l'utilisateur a déjà 2 résas dans cette semaine => on bloque pour la 3e
                 return JsonResponse({
                     "success": False,
                     "message": "Vous avez déjà 2 réservations dans cette semaine."
                 }, status=400)
 
-            # b) Vérifier si c'est une NOUVELLE semaine par rapport à la dernière réservation
             last_resa = Reservation.objects.filter(user=user).order_by('-created_at').first()
             if last_resa:
                 last_resa_date = last_resa.time_slot.date
                 monday_of_last = get_monday(last_resa_date)
                 if monday_of_parsed != monday_of_last:
-                    # => nouvelle semaine
                     old_week_sunday = monday_of_last + timedelta(days=6)
                     old_week_count = Reservation.objects.filter(
                         user=user,
@@ -624,7 +574,6 @@ def make_reservation(request):
                                 )
                             }, status=400)
 
-            # c) Vérifier si le TimeSlot est encore disponible
             try:
                 time_slot = TimeSlot.objects.select_for_update().get(
                     box_id=box_id,
@@ -639,7 +588,6 @@ def make_reservation(request):
                     "message": "Le créneau est déjà réservé ou inexistant."
                 }, status=400)
 
-            # d) Marquer indisponible + créer la réservation
             time_slot.is_available = False
             time_slot.save()
 
@@ -649,22 +597,16 @@ def make_reservation(request):
                 email=email
             )
 
-        # ----------------------------
-        # Envoi de l'email de confirmation
-        # ----------------------------
-        # Récupération des données à afficher
         date_formatee = time_slot.date.strftime("%d/%m/%Y")
         creneau = f"{time_slot.start_time.strftime('%H:%M')} - {time_slot.end_time.strftime('%H:%M')}"
         salle   = time_slot.box.name
 
-        # URLs des logos
         URL_LOGO_PIXEL = "https://bu.parisnanterre.fr/medias/photo/vignette-pixel_1622616619465-png"
         URL_LOGO_NANTERRE = (
             "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/"
             "Logo_Universit%C3%A9_Paris-Nanterre.svg/473px-Logo_Universit%C3%A9_Paris-Nanterre.svg.png"
         )
 
-        # Construire le contenu HTML
         html_content = f"""
         <html>
         <head>
@@ -672,30 +614,22 @@ def make_reservation(request):
         </head>
         <body style="margin:0; padding:0; font-family: Arial, sans-serif; text-align:center;">
             
-            <!-- En-tête : logos et titre -->
             <div style="display: flex; justify-content: center; align-items: center; margin: 20px 0;">
-                <!-- Logo Pixel à gauche -->
                 <div style="margin-right: 30px;">
                     <img src="{URL_LOGO_PIXEL}" alt="Logo Pixel" style="max-height: 80px;">
                 </div>
-
-                <!-- Titre au centre -->
                 <h1 style="margin: 0; font-size: 28px;">
                     Box Silencieux
                 </h1>
-
-                <!-- Logo Paris Nanterre à droite -->
                 <div style="margin-left: 30px;">
                     <img src="{URL_LOGO_NANTERRE}" alt="Logo Université Paris Nanterre" style="max-height: 80px;">
                 </div>
             </div>
 
-            <!-- Titre de confirmation -->
             <h2 style="font-size: 22px; margin-top: 20px; color: #333;">
                 Votre réservation est confirmée !
             </h2>
 
-            <!-- Informations principales (date, créneau, salle) en gras et centrées -->
             <p style="font-size: 18px; color: #555; font-weight: bold; text-align:center; margin-top: 30px;">
                 {date_formatee} — {creneau} — {salle}
             </p>
@@ -706,7 +640,6 @@ def make_reservation(request):
                 dans les temps et à respecter les consignes de la salle. 
             </p>
 
-            <!-- Signature en bas -->
             <div style="margin-top: 40px; text-align: center;">
                 <img src="{URL_LOGO_NANTERRE}" alt="Logo Université Paris Nanterre" 
                      style="max-height: 50px; display: block; margin: 0 auto 10px auto;">
@@ -725,7 +658,6 @@ def make_reservation(request):
         </html>
         """
 
-        # Fallback texte brut
         text_message = (
             f"Votre réservation est confirmée !\n\n"
             f"Date : {date_formatee}\n"
@@ -748,10 +680,8 @@ def make_reservation(request):
                 html_message=html_content,
             )
         except Exception as e:
-            # On n’empêche pas la réservation, on signale juste l’erreur
             return JsonResponse({"success": True, "message": f"Réservation confirmée, mais échec d'envoi du mail : {e}"})
 
-        # Fin : on renvoie la réponse JSON standard
         return JsonResponse({"success": True, "message": "Réservation confirmée !"})
 
     except json.JSONDecodeError:
