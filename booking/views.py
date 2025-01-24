@@ -5,7 +5,6 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from django.utils.crypto import get_random_string
 
-import random
 import json
 from datetime import datetime, timedelta, date, time
 from django.utils.dateparse import parse_date, parse_time
@@ -42,7 +41,7 @@ def index(request):
         # On vérifie que le champ email n'est pas vide
         if not email:
             messages.error(request, "Veuillez entrer une adresse email.")
-            return redirect('index')
+            return redirect('index') #On redirige vers la page d'accueil 
 
         # On vérifie que c'est bien une adresse universitaire
         if not email.endswith("@parisnanterre.fr"):
@@ -65,7 +64,7 @@ def index(request):
             "Logo_Universit%C3%A9_Paris-Nanterre.svg/473px-Logo_Universit%C3%A9_Paris-Nanterre.svg.png"
         )
 
-        # On crée une version HTML du code en petits blocs
+        # On crée une version HTML du code en petits conteneur (frontend)
         code_digits_html = ''.join(
             f"""
             <div style="
@@ -85,7 +84,7 @@ def index(request):
             for digit in code
         )
 
-        # Contenu HTML du mail
+        # Contenu HTML du mail L'idée c'est de rendre plus design nos mails en ajoutant les logo, titre, couleurs,..
         html_content = f"""
         <html>
         <head>
