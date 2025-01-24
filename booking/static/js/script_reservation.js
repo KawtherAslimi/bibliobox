@@ -262,7 +262,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    // Quand on clique sur "Rechercher", on récupère la date, l'heure et le type de box pour générer les résultats
+    // Quand on clique sur Rechercher, on récupère la date, l'heure et le nom de la bibliothèque (Pixel ou Droit) et on affiche les résultats
     searchButton.addEventListener("click", async () => {
         const selectedDate    = dateInput.value;
         const startTime       = startTimeSelect.value;
