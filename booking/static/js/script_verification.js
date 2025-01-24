@@ -1,19 +1,21 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Sélection des éléments dans la page
+    // On récupère les champs où l'utilisateur va entrer le code
     const codeInputs = document.querySelectorAll(".code-input");
     const hiddenCodeInput = document.getElementById("hidden-code");
     const verificationForm = document.getElementById("verification-form");
 
+    // Quand on tape dans un champ, on passe automatiquement au suivant
     codeInputs.forEach((input, index) => {
         input.addEventListener("input", () => {
             if (input.value.length === 1 && index < codeInputs.length - 1) {
                 codeInputs[index + 1].focus();
             }
 
-            // Assemble le code complet dans le champ caché
+            // On assemble les chiffres saisis pour former le code complet
             hiddenCodeInput.value = Array.from(codeInputs).map(input => input.value).join("");
         });
 
+        // Gestion de la touche "Retour arrière" pour revenir au champ précédent
         input.addEventListener("keydown", (e) => {
             if (e.key === "Backspace" && input.value === "" && index > 0) {
                 codeInputs[index - 1].focus();
@@ -21,23 +23,24 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    // Quand on soumet le formulaire
     verificationForm.addEventListener("submit", (event) => {
-        event.preventDefault(); // Empêche le rechargement de la page
-        
+        event.preventDefault(); // On empêche le rechargement de la page
+
         const enteredCode = hiddenCodeInput.value.trim();
         if (enteredCode.length !== 4) {
             alert("Veuillez entrer un code complet à 4 chiffres.");
             return;
         }
 
-        // Récupération de l'email depuis localStorage
+        // On récupère l'email stocké localement
         const email = localStorage.getItem("email");
         if (!email) {
             alert("Adresse e-mail introuvable. Veuillez réessayer.");
             return;
         }
 
-        // Envoi du code au serveur pour vérification
+        // On envoie le code au serveur pour vérifier s'il est correct
         fetch('/verify-code/', {
             method: 'POST',
             headers: {
@@ -50,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(data => {
             if (data.success) {
                 alert(data.message);
-                // Redirection vers la page de réservation
+                // Redirection vers la page de réservation si le code est correct
                 window.location.href = "/reservation/";
             } else {
                 alert(data.message);
@@ -65,28 +68,28 @@ document.addEventListener("DOMContentLoaded", () => {
     const timerElement = document.getElementById("time");
     const verificationButton = verificationForm.querySelector("button[type='submit']");
 
-    // Définissez la durée du timer en secondes (3 minutes)
+    // Durée du timer en secondes (3 minutes)
     let timeLeft = 3 * 60; // 180 secondes
 
-    // Fonction pour mettre à jour le timer toutes les secondes
+    // Mise à jour du timer chaque seconde
     const countdown = setInterval(() => {
         const minutes = Math.floor(timeLeft / 60);
         const seconds = timeLeft % 60;
 
-        // Mettre à jour l'affichage du timer
+        // Mise à jour de l'affichage du temps restant
         timerElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
 
         if (timeLeft <= 0) {
-            clearInterval(countdown); // Arrêter le timer
-            alert("Temps écoulé. Veuillez réenvoyer un nouveau code de vérification.");
-            
-            // Désactiver le formulaire de vérification
+            clearInterval(countdown); // Arrête le timer
+            alert("Temps écoulé. Veuillez demander un nouveau code.");
+
+            // Désactive le bouton de validation pour empêcher d'envoyer un code expiré
             verificationButton.disabled = true;
 
-            // Optionnel : Rediriger l'utilisateur vers la page d'accueil ou une page spécifique
-            // window.location.href = "/index/"; // Remplacez par l'URL appropriée
+            // Optionnel : on pourrait rediriger vers la page d'accueil
+            // window.location.href = "/index/"; 
         }
 
         timeLeft--;
-    }, 1000); // Exécute toutes les 1000 millisecondes (1 seconde)
+    }, 1000); // Décompte chaque seconde
 });
