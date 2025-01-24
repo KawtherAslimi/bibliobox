@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // On récupère tous les éléments nécessaires du DOM
     const dateInput       = document.getElementById("date-selection");
     const startTimeSelect = document.getElementById("start-time");
     const endTimeSelect   = document.getElementById("end-time");
@@ -7,14 +6,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const boxesContainer  = document.getElementById("boxes-container");
     const boxSelection    = document.getElementById("box-selection");
 
-    // Section et formulaire de confirmation
     const confirmationSection = document.getElementById("confirmation-form"); 
     const reservationForm     = document.getElementById("reservation-form");
 
-    // On cache la section de confirmation au départ
     confirmationSection.style.display = "none";
 
-    // Éléments pour afficher le récapitulatif de la réservation
     const confirmDateElem  = document.getElementById("confirm-date");
     const confirmSlotElem  = document.getElementById("confirm-slot");
     const confirmRoomElem  = document.getElementById("confirm-room");
@@ -77,7 +73,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // Cette fonction récupère le token CSRF pour les requêtes POST
     const getCookie = (name) => {
         let cookieValue = null;
         if (document.cookie && document.cookie !== "") {
@@ -94,7 +89,6 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     const csrftoken = getCookie("csrftoken");
 
-    // Cette fonction formate une date en jj/mm/aaaa
     const formatDate = (dateString) => {
         const d = new Date(dateString);
         const day   = String(d.getDate()).padStart(2, "0");
