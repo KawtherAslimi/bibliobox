@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const totalReservationsElem = document.getElementById("total-reservations");
     const exportButton = document.getElementById("export-excel");
 
-    // Récupération du numéro étudiant et affichage dans l'interface
+    // On récupère le numéro étudiant et on l'affiche dans l'onglet user de l'étudiant
     fetch("/api/get-student-number/")
         .then((resp) => {
             if (!resp.ok) {
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
             studentNumberElement.textContent = "Inconnu";
         });
 
-    // Récupération de l'email et affichage dans le profil utilisateur
+    // Récupération de l'email et on l'affiche dans le coté Profil et Stastistique pour apporter un coté session qui rassura l'étudiant 
     fetch("/api/get-user-email/")
         .then((resp) => {
             if (!resp.ok) {
@@ -38,9 +38,8 @@ document.addEventListener("DOMContentLoaded", () => {
             userEmailElement.textContent = "Inconnu";
         });
 
-    // Ajout d'une réservation dans le tableau
+    // On ajoute une réservation dans le tableau 
     const addReservationToHistory = (reservation) => {
-        // Formate la date pour l'affichage
         const formatDate = (isoDate) => {
             const dateObj = new Date(isoDate); 
             const day = String(dateObj.getDate()).padStart(2, '0');
@@ -49,12 +48,11 @@ document.addEventListener("DOMContentLoaded", () => {
             return `${day}/${month}/${year}`;
         };
 
-        // Supprime la ligne indiquant l'absence de réservations si elle existe
         if (noDataRow) {
             noDataRow.remove();
         }
 
-        // Création d'une nouvelle ligne pour afficher la réservation
+        // Ici on crée une nouvelle ligne pour afficher la réservation
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${formatDate(reservation.date)}</td>
@@ -83,14 +81,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // Annulation d'une réservation
+    // Pour annuler une réservation 
     const cancelReservation = async (reservationId, rowElement) => {
         try {
             const response = await fetch("/api/cancel-reservation/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "X-CSRFToken": getCookie("csrftoken"), // Lecture du token CSRF pour la requête
+                    "X-CSRFToken": getCookie("csrftoken"), 
                 },
                 body: JSON.stringify({ reservation_id: reservationId }),
             });
@@ -110,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // Vérification si le tableau est vide et affichage d'un message
+    // On vérifie si le tableau est vide et on affiche un message
     const checkIfEmpty = () => {
         if (historyBody.children.length === 0) {
             historyBody.innerHTML = `
@@ -150,7 +148,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // Récupération du token CSRF pour les requêtes sécurisées
     const getCookie = (name) => {
         let cookieValue = null;
         if (document.cookie && document.cookie !== "") {
@@ -166,7 +163,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return cookieValue;
     };
 
-    // Exportation de l'historique en fichier CSV
+    // Possibilité d'exporter son tableau en excel 
     if (exportButton) {
         exportButton.addEventListener("click", () => {
             const table = document.getElementById("history-table");
@@ -194,12 +191,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Lancement de la récupération de l'historique et vérification des données au chargement
     loadHistory();
     checkIfEmpty();
 });
 
-// Gestion du menu utilisateur (affichage du menu au clic)
 document.addEventListener("click", function (e) {
     const userMenu = document.querySelector(".user-menu");
     const dropdown = document.querySelector(".dropdown");
