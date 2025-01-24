@@ -1,8 +1,5 @@
-
 document.addEventListener("DOMContentLoaded", () => {
-    // --------------------------------------------------
-    // Sélecteurs
-    // --------------------------------------------------
+    // On récupère tous les éléments nécessaires du DOM
     const dateInput       = document.getElementById("date-selection");
     const startTimeSelect = document.getElementById("start-time");
     const endTimeSelect   = document.getElementById("end-time");
@@ -10,24 +7,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const boxesContainer  = document.getElementById("boxes-container");
     const boxSelection    = document.getElementById("box-selection");
 
-    // SECTION et FORMULAIRE de confirmation
+    // Section et formulaire de confirmation
     const confirmationSection = document.getElementById("confirmation-form"); 
     const reservationForm     = document.getElementById("reservation-form");
 
-    // On masque la SECTION complète par défaut
+    // On cache la section de confirmation au départ
     confirmationSection.style.display = "none";
 
-    // Champs de récapitulatif
+    // Éléments pour afficher le récapitulatif de la réservation
     const confirmDateElem  = document.getElementById("confirm-date");
     const confirmSlotElem  = document.getElementById("confirm-slot");
     const confirmRoomElem  = document.getElementById("confirm-room");
     const confirmEmailElem = document.getElementById("confirm-email");
 
-    
-
-    // --------------------------------------------------
-    // 1) Récupérer l'email depuis localStorage OU depuis /api/get-user-email/
-    // --------------------------------------------------
+    // On vérifie si l'email est déjà dans le localStorage
     const storedEmail = localStorage.getItem("student_email");
     if (storedEmail) {
         confirmEmailElem.value = storedEmail;
@@ -49,9 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     }
 
-    // --------------------------------------------------
-    // Mise en place d’une date minimale (aujourd'hui)
-    // --------------------------------------------------
+    // On définit la date minimale autorisée (aujourd'hui)
     const setMinDate = () => {
         const today = new Date();
         const yyyy  = today.getFullYear();
@@ -60,9 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
         dateInput.setAttribute("min", `${yyyy}-${mm}-${dd}`);
     };
 
-    // --------------------------------------------------
-    // Générer des options horaires (08:30 -> 19:45)
-    // --------------------------------------------------
+    // On génère la liste des créneaux horaires entre 08:30 et 19:45
     const generateTimeOptions = (select) => {
         select.innerHTML = "";
         let currentHour   = 8;
@@ -88,9 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // --------------------------------------------------
-    // CSRF token (pour Django)
-    // --------------------------------------------------
+    // Cette fonction récupère le token CSRF pour les requêtes POST
     const getCookie = (name) => {
         let cookieValue = null;
         if (document.cookie && document.cookie !== "") {
@@ -107,9 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     const csrftoken = getCookie("csrftoken");
 
-    // --------------------------------------------------
-    // Formater la date (jj/mm/aaaa) pour l'affichage final
-    // --------------------------------------------------
+    // Cette fonction formate une date en jj/mm/aaaa
     const formatDate = (dateString) => {
         const d = new Date(dateString);
         const day   = String(d.getDate()).padStart(2, "0");
@@ -118,9 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return `${day}/${month}/${year}`;
     };
 
-    // --------------------------------------------------
-    // Générer la liste des slots (start -> end, par pas de 15 min)
-    // --------------------------------------------------
+    // On génère tous les créneaux de 15 minutes entre deux heures
     const generateSlots = (startTime, endTime) => {
         const slots = [];
         const [startH, startM] = startTime.split(":").map(Number);
@@ -140,9 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return slots;
     };
 
-    // --------------------------------------------------
-    // Calcule l'heure de fin (slot + 15 min)
-    // --------------------------------------------------
+    // On calcule l'heure de fin en ajoutant 15 minutes à un créneau donné
     const computeEndTime = (slot) => {
         const [h, m] = slot.split(":").map(Number);
         let endH = h;
@@ -154,9 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return `${String(endH).padStart(2,"0")}:${String(endM).padStart(2,"0")}`;
     };
 
-    // --------------------------------------------------
-    // API pour obtenir la liste de boxes
-    // --------------------------------------------------
+    // Cette fonction appelle l'API pour récupérer les boxes disponibles
     const fetchBoxes = async (date, startTime, endTime, boxType) => {
         try {
             const url = `/api/available-boxes/?date=${date}&start_time=${startTime}&end_time=${endTime}&type=${boxType}`;
@@ -172,9 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // --------------------------------------------------
-    // Générer et afficher les boxes
-    // --------------------------------------------------
+    // On génère et on affiche les boxes disponibles
     const generateBoxes = async (date, startTime, endTime, boxType) => {
         boxesContainer.innerHTML = "";
 
@@ -184,30 +161,23 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // Pour chaque box, on va "lister" les slots entre startTime et endTime
-        // puis marquer ceux qui sont disponibles.
+        // Pour chaque box, on liste les créneaux (slots) et on indique ceux qui sont libres
         const slotList = generateSlots(startTime, endTime);
 
         boxes.forEach((box) => {
-            // box = { id: <box_id>, name: "PIXEL A", slots: [ {id: <TimeSlot_id>, availability_time:"08:30", ...}, ... ] }
-
-            // Div d'une box
             const boxDiv = document.createElement("div");
             boxDiv.className = "box";
 
-            // Icône
             const boxImage = document.createElement("img");
             boxImage.src = "/static/images/appel.png";
             boxImage.alt = "Icône salle";
             boxImage.classList.add("icon-box1");
             boxDiv.appendChild(boxImage);
 
-            // Titre salle
             const h3 = document.createElement("h3");
             h3.textContent = box.name;
             boxDiv.appendChild(h3);
 
-            // Slots container
             const slotsContainer = document.createElement("div");
             slotsContainer.className = "slots";
 
@@ -216,18 +186,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 slotDiv.classList.add("slot", "available");
                 slotDiv.textContent = slot;
 
-                // Vérifier si le slot se trouve dans box.slots
                 const found = box.slots.find(
                     (s) => s.availability_time === slot && s.is_available
                 );
                 if (!found) {
-                    // Slot non disponible => grisé
                     slotDiv.classList.remove("available");
                     slotDiv.classList.add("unavailable");
                 }
 
                 slotDiv.addEventListener("click", () => {
-                    // Sélectionne ce slot, désélectionne les autres
                     slotsContainer.querySelectorAll(".slot").forEach((s) => s.classList.remove("selected"));
                     if (slotDiv.classList.contains("available")) {
                         slotDiv.classList.add("selected");
@@ -238,7 +205,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
             boxDiv.appendChild(slotsContainer);
 
-            // Bouton "Réserver"
             const reserveBtn = document.createElement("button");
             reserveBtn.className = "reserve-btn";
             reserveBtn.textContent = "Réserver";
@@ -250,16 +216,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
-                // Mise à jour du récap
                 confirmDateElem.textContent = formatDate(date);
                 confirmSlotElem.textContent = selectedSlot.textContent;
                 confirmRoomElem.textContent = box.name;
 
-                // Affichage de la section de confirmation
                 confirmationSection.style.display = "block";
                 confirmationSection.scrollIntoView({ behavior: "smooth" });
 
-                // Soumission du formulaire
                 reservationForm.onsubmit = async (e) => {
                     e.preventDefault();
                     try {
@@ -287,7 +250,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         }
 
                         alert("Réservation réussie !");
-                        // Redirection
                         window.location.href = "/historique/";
                     } catch (error) {
                         alert("Erreur : " + error.message);
@@ -300,9 +262,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    // --------------------------------------------------
-    // Bouton "Rechercher"
-    // --------------------------------------------------
+    // Quand on clique sur "Rechercher", on récupère la date, l'heure et le type de box pour générer les résultats
     searchButton.addEventListener("click", async () => {
         const selectedDate    = dateInput.value;
         const startTime       = startTimeSelect.value;
@@ -317,9 +277,7 @@ document.addEventListener("DOMContentLoaded", () => {
         await generateBoxes(selectedDate, startTime, endTime, selectedBoxType);
     });
 
-    // --------------------------------------------------
-    // Initialisation
-    // --------------------------------------------------
+    // On initialise la page en définissant la date min et en créant les options horaires
     const init = () => {
         setMinDate();
         generateTimeOptions(startTimeSelect);
@@ -329,23 +287,17 @@ document.addEventListener("DOMContentLoaded", () => {
     init();
 });
 
-// ------------------------------------------
-// Gestion du menu utilisateur par clic
-// ------------------------------------------
+// Gestion du menu utilisateur au clic
 document.addEventListener("click", function (e) {
     const userMenu = document.querySelector(".user-menu");
     const dropdown = document.querySelector(".dropdown");
     
-    // Si on clique sur l'icône user (ou dans la zone .user-menu),
-    // on toggle l'affichage du dropdown
     if (userMenu.contains(e.target)) {
         e.stopPropagation();
         dropdown.style.display = (dropdown.style.display === "block") 
             ? "none" 
             : "block";
-    } 
-    // Sinon, si on clique ailleurs dans la page, on ferme la dropdown
-    else {
+    } else {
         dropdown.style.display = "none";
     }
 });
